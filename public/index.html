@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="A simple real-time chat app with rooms and live presence."
+    />
+    <title>Realtime Chat</title>
+    <link rel="stylesheet" href="/style.css" />
+    <script src="/socket.io/socket.io.js" defer></script>
+    <script src="/app.js" defer></script>
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="app-header">
+        <a class="brand" href="/" aria-label="Realtime Chat home">
+          <span class="brand-mark" aria-hidden="true">●</span>
+          <span>Realtime Chat</span>
+        </a>
+        <span class="connection-status" id="connection-status">
+          <span class="status-dot" aria-hidden="true"></span>
+          Connecting
+        </span>
+      </header>
+
+      <section class="join-card" id="join-screen" aria-labelledby="welcome-title">
+        <div class="welcome-icon" aria-hidden="true">✦</div>
+        <p class="eyebrow">A little more connected</p>
+        <h1 id="welcome-title">Join the conversation</h1>
+        <p class="muted">Choose a name and a room to start chatting.</p>
+        <form id="join-form">
+          <label for="username">Your name</label>
+          <input
+            id="username"
+            name="username"
+            type="text"
+            maxlength="24"
+            autocomplete="nickname"
+            placeholder="e.g. Alex"
+            required
+          />
+          <label for="room">Room</label>
+          <input
+            id="room"
+            name="room"
+            type="text"
+            maxlength="32"
+            value="lobby"
+            placeholder="e.g. lobby"
+            required
+          />
+          <p class="form-error" id="join-error" role="alert"></p>
+          <button class="primary-button" type="submit">Join room <span aria-hidden="true">→</span></button>
+        </form>
+      </section>
+
+      <section class="chat-layout hidden" id="chat-screen" aria-label="Chat room">
+        <div class="chat-panel">
+          <div class="room-header">
+            <div>
+              <p class="eyebrow">You are chatting in</p>
+              <h1 id="room-title">#lobby</h1>
+            </div>
+            <button class="text-button" id="change-room" type="button">Change room</button>
+          </div>
+
+          <ol class="messages" id="messages" aria-live="polite" aria-relevant="additions"></ol>
+          <div class="typing-indicator" id="typing-indicator" aria-live="polite"></div>
+
+          <form class="message-form" id="message-form">
+            <label class="sr-only" for="message-input">Write a message</label>
+            <input
+              id="message-input"
+              name="message"
+              type="text"
+              maxlength="2000"
+              placeholder="Write a message…"
+              autocomplete="off"
+              required
+            />
+            <button class="send-button" type="submit" aria-label="Send message">↑</button>
+          </form>
+          <p class="hint">Press Enter to send</p>
+        </div>
+
+        <aside class="people-panel" aria-labelledby="people-title">
+          <div class="people-heading">
+            <h2 id="people-title">People here</h2>
+            <span class="people-count" id="people-count">0</span>
+          </div>
+          <ul class="people-list" id="people-list"></ul>
+        </aside>
+      </section>
+    </main>
+  </body>
+</html>
